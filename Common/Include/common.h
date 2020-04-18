@@ -30,6 +30,7 @@
 
 #ifdef  USE_HAL
 #include <stm32f1xx_hal.h>
+#include <stm32f1xx_hal_rcc_ex.h>
 
 typedef struct {
     GPIO_TypeDef  *gpio;

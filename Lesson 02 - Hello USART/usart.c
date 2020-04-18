@@ -50,11 +50,41 @@ void tfp_putchar(char data)
     HAL_USART_Transmit(&g_usart, (uint8_t*)&data, sizeof(data), HAL_MAX_DELAY);
 }
 
+static void init_clocks(void)
+{
+    static const RCC_OscInitTypeDef rcc_osc_init = {
+        RCC_OSCILLATORTYPE_HSE,
+        RCC_HSE_ON,
+        RCC_HSE_PREDIV_DIV1,
+        0,0,0,0,
+        {
+            RCC_PLL_ON,
+            RCC_PLLSOURCE_HSE,
+            RCC_PLL_MUL9
+        }
+    };
+
+    static const RCC_ClkInitTypeDef rcc_clk_init = {
+        (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2),
+        RCC_SYSCLKSOURCE_PLLCLK,
+        RCC_SYSCLK_DIV1,
+        RCC_HCLK_DIV2,
+        RCC_HCLK_DIV1,
+    };
+
+    HAL_RCC_OscConfig((RCC_OscInitTypeDef*)&rcc_osc_init);
+    HAL_RCC_ClockConfig((RCC_ClkInitTypeDef*)&rcc_clk_init, FLASH_LATENCY_2);
+
+    __HAL_RCC_PWR_CLK_ENABLE();
+
+    SystemCoreClockUpdate();
+}
+
 static void init(void)
 {
     int i;
  
-    const USART_InitTypeDef usart_init = {
+    static const USART_InitTypeDef usart_init = {
         115200*2,
         USART_WORDLENGTH_8B,
         USART_STOPBITS_1,
@@ -64,6 +94,9 @@ static void init(void)
         USART_PHASE_1EDGE,
         USART_LASTBIT_ENABLE
     };
+
+    /* reconfigure clocks */
+    init_clocks();
 
     /* Enable Clocks */
     __HAL_RCC_AFIO_CLK_ENABLE();
@@ -84,7 +117,7 @@ static void init(void)
     g_usart.Instance = USART1;
     g_usart.Init = usart_init;
     HAL_USART_Init(&g_usart);
-} 
+}
 
 /* Main application entry - called by OnReset handler,
  * performing memory initalizations in helper_init.c */
@@ -101,6 +134,6 @@ void main_entry(void)
     {
         Blink(3);
 
-        tfp_printf("%08u: Hello world!\n\r",counter++);
+        tfp_printf("%08u: Hello world (@%uMHz)!\n\r",counter++,SystemCoreClock/1000000);
     }
 }
