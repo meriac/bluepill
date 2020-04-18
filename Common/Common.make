@@ -8,7 +8,7 @@ OBJCOPY:=$(CROSS)objcopy
 OPT:=-Og
 FLAGS:=-mcpu=cortex-m3 -mthumb
 CFLAGS:=$(FLAGS) $(APP_CFLAGS) $(OPT) -D$(ARCH) -IInclude -I$(COMMON)/Include -I$(COMMON)/Platform/CMSIS5/Common -I$(COMMON)/Platform/CMSIS5/STM32F1xx/inc -I$(COMMON)/Platform/STM32F1xx/inc -fno-common -g3 -Wall -Werror -Wextra -ffunction-sections -fdata-sections
-LDFLAGS:=$(FLAGS) -T$(COMMON)/Linker/standard.ld -Xlinker --gc-sections -Xlinker -Map=$(PROJECT).map -nostartfiles -nostdlib -lnosys
+LDFLAGS:=$(FLAGS) -T$(COMMON)/Linker/standard.ld -Xlinker --gc-sections -Xlinker -Map=$(PROJECT).map -nostartfiles -lnosys
 
 SOURCES_HELPER:= \
     $(COMMON)/Helper/helper_init.c \
