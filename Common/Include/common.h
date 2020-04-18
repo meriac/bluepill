@@ -25,10 +25,17 @@
 
 #include <stm32f1xx.h>
 #include <stdbool.h>
+#include <string.h>
 #include <helper.h>
 
 #ifdef  USE_HAL
-#include <stm32f1xx_hal_conf.h>
+#include <stm32f1xx_hal.h>
+
+typedef struct {
+    GPIO_TypeDef  *gpio;
+    GPIO_InitTypeDef pin;
+} GPIO_InitItem;
+
 #endif/*USE_HAL*/
 
 #endif/*__NRF_H__*/

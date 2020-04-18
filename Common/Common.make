@@ -11,7 +11,8 @@ CFLAGS:=$(FLAGS) $(APP_CFLAGS) $(OPT) -D$(ARCH) -IInclude -I$(COMMON)/Include -I
 LDFLAGS:=$(FLAGS) -T$(COMMON)/Linker/standard.ld -Xlinker --gc-sections -Xlinker -Map=$(PROJECT).map -nostartfiles -nostdlib -lnosys
 
 SOURCES_HELPER:= \
-	$(COMMON)/Helper/helper_init.c \
+    $(COMMON)/Helper/helper_init.c \
+	$(COMMON)/Helper/helper_printf.c \
 	$(COMMON)/Helper/helper_irq.c \
     $(COMMON)/Platform/CMSIS5/STM32F1xx/src/system_stm32f1xx.c
 
@@ -54,6 +55,7 @@ SOURCES_HAL:= \
     $(COMMON)/Platform/STM32F1xx/src/stm32f1xx_hal_sram.c \
     $(COMMON)/Platform/STM32F1xx/src/stm32f1xx_hal_tim.c \
     $(COMMON)/Platform/STM32F1xx/src/stm32f1xx_hal_tim_ex.c \
+    $(COMMON)/Platform/STM32F1xx/src/stm32f1xx_hal_timebase_tim_template.c \
     $(COMMON)/Platform/STM32F1xx/src/stm32f1xx_hal_uart.c \
     $(COMMON)/Platform/STM32F1xx/src/stm32f1xx_hal_usart.c \
     $(COMMON)/Platform/STM32F1xx/src/stm32f1xx_hal_wwdg.c \

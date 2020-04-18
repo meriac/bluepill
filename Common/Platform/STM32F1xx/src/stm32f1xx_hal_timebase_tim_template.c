@@ -159,6 +159,8 @@ void HAL_ResumeTick(void)
   */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+  UNUSED(htim);
+
   HAL_IncTick();
 }
 
@@ -166,7 +168,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   * @brief  This function handles TIM interrupt request.
   * @retval None
   */
-void TIM2_IRQHandler(void)
+void OnIrq_TIM2(void)
 {
   HAL_TIM_IRQHandler(&TimHandle);
 }

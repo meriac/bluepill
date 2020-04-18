@@ -65,6 +65,12 @@ void OnReset(void)
      * Call Vendor Setup
      */
     SystemInit();
+    SystemCoreClockUpdate();
+
+#ifdef  USE_HAL
+    /* Enable HAL */ 
+    HAL_Init();
+#endif/*USE_HAL*/
 
     /*
      * Call user firmware entry
