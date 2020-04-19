@@ -149,7 +149,7 @@ static void init(void)
     for(i=0;i<GPIO_INIT_COUNT;i++)
         HAL_GPIO_Init(g_gpio_init[i].gpio, (GPIO_InitTypeDef*)&g_gpio_init[i].pin);
 
-    /* Enable USART1 */
+    /* Enable USART2 */
     __HAL_RCC_USART2_FORCE_RESET( );
     __HAL_RCC_USART2_RELEASE_RESET( );
     __HAL_RCC_USART2_CLK_ENABLE();
@@ -177,15 +177,15 @@ void main_entry(void)
         Blink(3);
         tfp_printf("%08u: Hello world (@%uMHz)!\n\r",counter++,SystemCoreClock/1000000);
 
-        for(i=0;i<50;i++)
+        for(i=25;i<120;i++)
         {
-            pwm_update(i*20);
-            HAL_Delay(20);
+            pwm_update(i);
+            HAL_Delay(4);
         }
-        for(i=50;i>0;i--)
+        for(i=120;i>25;i--)
         {
-            pwm_update(i*20);
-            HAL_Delay(20);
+            pwm_update(i);
+            HAL_Delay(6);
         }
     }
 }
